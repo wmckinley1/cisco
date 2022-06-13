@@ -1,0 +1,22 @@
+---
+- name: fetch 24 hours of monitoring text files
+  hosts: []
+  remote_user: []
+  become: false
+
+  tasks:
+
+   - name: fetch buffer monitor text
+      get_url:
+        url: ftp://[user[:pass]]@host.domain[:port]/path
+        dest: /path/to/local/dest
+
+    - name: fetch interface stats text
+      get_url:
+        url: ftp://[user[:pass]]@host.domain[:port]/path
+        dest: /path/to/local/dest
+
+    - name: fetch logs
+      get_url:
+        url: ftp://[user[:pass]]@host.domain[:port]/path
+        dest: /path/to/local/dest
