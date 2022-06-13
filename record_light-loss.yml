@@ -35,6 +35,20 @@
   - name: Show interface information
     cisco.ios.ios_commands:
       commands: show interface transceiver
+    register: output
+  
+  - name: Create files directory on ansible host if it does not exist
+    file:
+      state: directory
+      path: "{{ playbook_dir }}/files }}"
+    delegate_to: localhost
+    
+  - name: Save output to ansible host
+    copy:
+      content: "{{ output | to_nice_json }}"
+      dest: "{{ playbook_dir }}/files/record_light-loss.txt"
+    delegate_to: localhost
+     
 
   - name: disable cisco digital optical monitoring
     cisco.ios.ios_config:
