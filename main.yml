@@ -1,0 +1,182 @@
+---
+# BACKBONE AND DATACENTER SHOW COMMANDS TO EXECUTE
+- name: Gather tech-support information
+  cisco.ios.ios_commands:
+    commands: show tech
+
+- name: View control plane memory and CPU utilization information
+  cisco.ios.ios_commands:
+    commands: show platform software status control-processor brief
+
+- name: Monitor memory usage
+  cisco.ios.ios_commands:
+    commands: show memory allocating-process totals
+
+- name: Show current spanning-tree status
+  cisco.ios.ios_commands:
+    commands: show spanning-tree summary
+
+- name: See the list of inconsistent ports
+  cisco.ios.ios_commands:
+    commands: show spanning-tree inconsistent
+
+- name: Display the configured or calculated interface-level spanning-tree protocol parameters
+  cisco.ios.ios_commands:
+    commands:
+    - show spanning-tree interface fo1/1/1 detail
+    - show spanning-tree interface fo2/1/1 detail
+
+- name: Display device-specific queue stats for 40G interfaces on switches 1 & 2
+  cisco.ios.ios_commands:
+    commands:
+    - show platform hardware fed switch 1 qos queue stats interface fortygig 1/1/1
+    - show platform hardware fed switch 2 qos queue stats interface fortygig 2/1/1
+
+- name: Display device-specific information queue stats for 10G interfaces active switch
+  cisco.ios.ios_commands:
+    commands:
+    - "show platform hardware fed switch active qos queue stats interface TenGigabitEthernet1/0/{{ item }}"
+    - "show platform hardware fed switch active qos queue stats interface TenGigabitEthernet2/0/{{ item }}"
+  with_sequence: start=45 end=48
+
+#BACKBONE EMM SCRIPT COMMANDS (to run every hour)
+
+- name: Register an applet with EEM bypassing AAA
+  cisco.ios.ios_commands:
+    commands: event manager applet MONITORING authorization bypass
+
+- name: Set event timer to 1 hour
+  cisco.ios.ios_commands:
+    commands: event timer watchdog time 3600
+
+- name: Generate syslog message
+  cisco.ios.ios_commands:
+    commands: action 1.0 syslog msg "TAC - Collecting QoS statistics and buffering info"
+
+- name: Change to privileged mode
+  cisco.ios.ios_commands:
+    commands: action 1.1 cli command "enable"
+
+      #change command to save output to file on ansible host
+
+
+- name: Gather device-specific hardware information QoS queue stats for egress-cpu
+  cisco.ios.ios_commands:
+    commands:
+    - action 1.2 cli command "show platf hardware fed switch 1 qos queue stats internal port_type egress-cpu asic 0 | append flash:BufferMonitor.txt"
+    - action 1.3 cli command "show platf hardware fed switch 1 qos queue stats internal port_type egress-cpu asic 1 | append flash:BufferMonitor.txt"
+    - action 1.4 cli command "show platf hardware fed switch 1 qos queue stats internal port_type egress-cpu asic 2 | append flash:BufferMonitor.txt"
+    - action 1.5 cli command "show platf hardware fed switch 1 qos queue stats internal port_type egress-cpu asic 3 | append flash:BufferMonitor.txt"
+    - action 1.6 cli command "show platf hardware fed switch 2 qos queue stats internal port_type egress-cpu asic 0 | append flash:BufferMonitor.txt"
+    - action 1.7 cli command "show platf hardware fed switch 2 qos queue stats internal port_type egress-cpu asic 1 | append flash:BufferMonitor.txt"
+    - action 1.8 cli command "show platf hardware fed switch 2 qos queue stats internal port_type egress-cpu asic 2 | append flash:BufferMonitor.txt"
+    - action 1.9 cli command "show platf hardware fed switch 2 qos queue stats internal port_type egress-cpu asic 3 | append flash:BufferMonitor.txt"
+
+- name: name
+  cisco.ios.ios_commands:
+    commands:
+    - action 2.0 cli command "show platform hardware fed switch 1 fwd-asic register read register-name AqmDtsGlobalSoftLimit | append flash:BufferMonitor.txt"
+    - action 2.1 cli command "show platform hardware fed switch 2 fwd-asic register read register-name AqmDtsGlobalSoftLimit | append flash:BufferMonitor.txt"
+    - action 2.2 cli command "show platform hardware fed switch 1 fwd-asic register read register-name AqmDtsGlobalSoftBufCnt | append flash:BufferMonitor.txt"
+    - action 2.3 cli command "show platform hardware fed switch 2 fwd-asic register read register-name AqmDtsGlobalSoftBufCnt | append flash:BufferMonitor.txt"
+
+- name: Display device-specific information queue stats for 10G interfaces
+  cisco.ios.ios_commands:
+    commands:
+    - action 2.4 cli command "show platform hardware fed sw 1 qos queue stats interface fo1/1/1 | append flash:BufferMonitor.txt"
+    - action 2.5 cli command "show platform hardware fed sw 2 qos queue stats interface fo2/1/1 | append flash:BufferMonitor.txt"
+    
+- name: Gather spanning-tree information
+  cisco.ios.ios_commands:
+    commands: 
+    - action 2.6 cli command "show spanning-tree summary | append flash:BufferMonitor.txt"
+    - action 2.7 cli command "show spanning-tree interface Fo1/1/1 detail | append flash:BufferMonitor.txt"
+    - action 2.8 cli command "show spanning-tree interface Fo2/1/1 detail | append flash:BufferMonitor.txt"
+    - action 2.9 cli command "show spanning-tree inconsis | append flash:BufferMonitor.txt"
+
+- name: Gather interface information
+  cisco.ios.ios_commands:
+    commands:
+    - action 3.0 cli command “show interface fo1/1/1 | append flash:InterfaceStats.txt
+    - action 3.1 cli command “show interface fo2/1/1 | append flash:InterfaceStats.txt
+
+- name: Display a list of log files
+  cisco.ios.ios_commands:
+    commands: action 3.2 cli command "show logging | append flash:Logs.txt"
+
+- name: Generate syslog message
+  cisco.ios.ios_commands:
+    commands: action 3.3 syslog msg "TAC - Finished recollection of logs"
+
+#After 24h of monitoring, please extract the below three files which will be generated automatically from the switch: 
+#BufferMonitor.txt
+#InterfaceStats.txt
+#Logs.txt
+
+#Remove the EEM Script
+
+- name: Remove EEM Script
+  cisco.ios.ios_commands:
+    commands: 
+    - conf t
+    - no event manager applet MONITORING
+
+
+## ^ Run this every hour, every 24 hours extrace the the three file (set up seperate reoccuring playbook?)
+
+#In addition, we would need to tweak the logging buffer for both the stacks to collect all data available when issue re-occurs, please execute following configuration commands:
+
+#maybe cisco.ios.ios_logging_global
+- name: Incease the logging buffer level on both stacks
+  cisco.ios.ios_commands:
+    commands: 
+    - conf t
+    - logging buffer debugging
+
+- name: Enable logging event link under Po31
+  cisco.ios.ios_commands:
+    commands:
+    - int po31
+    - logging event link-status
+    - logging event trunk
+
+#USING CISCO SWITCH DIGITAL OPTICAL MONITORING COMMANDS
+
+- name: Change to privileged mode
+  cisco.ios.ios_commands:
+    commands: enable
+
+- name: Gather information on interfaces
+  cisco.ios.ios_commands:
+    commands: sh ip interface brief
+
+- name: Print neighbor data structure
+  cisco.ios.ios_commands:
+    commands: sh ip ospf neighbor
+
+- name: Print connection to local devices
+  cisco.ios.ios_commands:
+    commands:
+    - ping "{{ border_firewall_address_1 }}"
+    - ping "{{ border_firewall_address_2 ))"
+    - ping "{{ domain_controller_01 }}"
+
+- name: Enable Cisco digital optical monitoring
+  cisco.ios.ios_config:
+    lines:
+    - transceiver type all
+    - monitoring
+
+- name: Show interface information
+  cisco.ios.ios_commands:
+    commands: show interface transceiver
+
+- name: disable cisco digital optical monitoring
+  cisco.ios.ios_config:
+    lines:
+    - transceiver type all
+    - monitoring
+    - no monitoring
+
+#Collect data from previously logged events 
+#too much clicky to ansibleize
