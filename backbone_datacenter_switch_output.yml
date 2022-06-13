@@ -59,6 +59,6 @@
   - name: Save output to ansible host
     copy:
       content: "{{ command.{{ item }} | to_nice_json }}"
-      dest: "{{ playbook_dir }}/files/record_light-loss.txt"
+      dest: "{{ playbook_dir }}/files/backbone_datacenter_switch_output.txt"
     with_sequence: start=0 end=7
     delegate_to: localhost
