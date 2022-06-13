@@ -12,3 +12,7 @@ The increate_logging.yml playbook will tweak the logging buffer for both the sta
 
 ## record_light-loss.yml
 The record_light-loss.yml playbook will enable native Cisco DOM (Digital Optical Monitoring) capabilities to note fiber light-loss on select inter-switch links. This will result in a record_light-loss.txt in the ./files directory on the ansible host.
+
+
+#TODO
+identify hosts and inventory file structure
