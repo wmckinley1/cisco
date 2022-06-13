@@ -1,0 +1,45 @@
+---
+- name: Measure and Record Fiber Light-Loss on Select Inter-Switch Links
+  hosts: ?
+  vars:
+    border_firewall_address_1: xxx.xxx.xxx.xxx
+    border_firewall_address_2: aaa.aaa.aaa.aaa
+    domain_controller_01: bbb.bbb.bbb.bbb
+  tasks:
+  
+  - name: Change to privileged mode
+    cisco.ios.ios_commands:
+      commands: enable
+
+  - name: Gather information on interfaces
+    cisco.ios.ios_commands:
+      commands: sh ip interface brief
+
+  - name: Print neighbor data structure
+    cisco.ios.ios_commands:
+      commands: sh ip ospf neighbor
+
+  - name: Print connection to local devices
+    cisco.ios.ios_commands:
+      commands:
+      - ping "{{ border_firewall_address_1 }}"
+      - ping "{{ border_firewall_address_2 ))"
+      - ping "{{ domain_controller_01 }}"
+
+  - name: Enable Cisco digital optical monitoring
+    cisco.ios.ios_config:
+      lines:
+      - transceiver type all
+      - monitoring
+
+  - name: Show interface information
+    cisco.ios.ios_commands:
+      commands: show interface transceiver
+
+  - name: disable cisco digital optical monitoring
+    cisco.ios.ios_config:
+      lines:
+      - transceiver type all
+      - monitoring
+      - no monitoring
+  
