@@ -1,0 +1,43 @@
+---
+- name: Backbone and Datacenter Switch Output
+  hosts: 
+  tasks:
+  
+  - name: Gather tech-support information
+    cisco.ios.ios_commands:
+      commands: show tech
+
+  - name: View control plane memory and CPU utilization information
+    cisco.ios.ios_commands:
+      commands: show platform software status control-processor brief
+
+  - name: Monitor memory usage
+    cisco.ios.ios_commands:
+      commands: show memory allocating-process totals
+
+  - name: Show current spanning-tree status
+    cisco.ios.ios_commands:
+      commands: show spanning-tree summary
+
+  - name: See the list of inconsistent ports
+    cisco.ios.ios_commands:
+      commands: show spanning-tree inconsistent
+
+  - name: Display the configured or calculated interface-level spanning-tree protocol parameters
+    cisco.ios.ios_commands:
+      commands:
+      - show spanning-tree interface fo1/1/1 detail
+      - show spanning-tree interface fo2/1/1 detail
+
+  - name: Display device-specific queue stats for 40G interfaces on switches 1 & 2
+    cisco.ios.ios_commands:
+      commands:
+      - show platform hardware fed switch 1 qos queue stats interface fortygig 1/1/1
+      - show platform hardware fed switch 2 qos queue stats interface fortygig 2/1/1
+
+  - name: Display device-specific information queue stats for 10G interfaces active switch
+    cisco.ios.ios_commands:
+      commands:
+      - "show platform hardware fed switch active qos queue stats interface TenGigabitEthernet1/0/{{ item }}"
+      - "show platform hardware fed switch active qos queue stats interface TenGigabitEthernet2/0/{{ item }}"
+    with_sequence: start=45 end=48
