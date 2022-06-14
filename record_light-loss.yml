@@ -5,6 +5,7 @@
     border_firewall_address_1: xxx.xxx.xxx.xxx
     border_firewall_address_2: aaa.aaa.aaa.aaa
     domain_controller_01: bbb.bbb.bbb.bbb
+    output_localtion : /path/to/record_light-loss.txt
   tasks:
   
   - name: Change to privileged mode
@@ -46,6 +47,7 @@
   - name: Save output to ansible host
     copy:
       content: "{{ output | to_nice_json }}"
+#      dest: "{{ output_localtion }}"
       dest: "{{ playbook_dir }}/files/record_light-loss.txt"
     delegate_to: localhost
      
