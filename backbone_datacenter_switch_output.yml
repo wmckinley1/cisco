@@ -62,5 +62,6 @@
     copy:
       content: "{{ command.{{ item }} | to_nice_json }}"
       dest: "{{ playbook_dir }}/files/backbone_datacenter_switch_output.txt"
+#      dest: "{{ output_localtion }}"
     with_sequence: start=0 end=7
     delegate_to: localhost
