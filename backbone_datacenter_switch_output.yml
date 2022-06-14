@@ -52,7 +52,7 @@
     with_sequence: start=45 end=48
     register: command.7
     
-   - name: Create files directory on ansible host if it does not exist
+  - name: Create files directory on ansible host if it does not exist
     file:
       state: directory
       path: "{{ playbook_dir }}/files }}"
