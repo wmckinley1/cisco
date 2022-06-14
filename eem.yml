@@ -67,8 +67,3 @@
     cisco.ios.ios_commands:
       commands: action 3.3 syslog msg "TAC - Finished recollection of logs"
       
-  - name: Remove EEM Script
-    cisco.ios.ios_commands:
-      commands: 
-      - conf t
-      - no event manager applet MONITORING
