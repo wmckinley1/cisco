@@ -1,6 +1,8 @@
 ---
 - name: Backbone and Datacenter Switch Output
   hosts: 
+  vars:
+    output_localtion: /path/to/backbone_datacenter_switch_output.txt
   tasks:
   
   - name: Gather tech-support information
