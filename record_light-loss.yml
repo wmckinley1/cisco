@@ -5,6 +5,7 @@
     border_firewall_address_1: xxx.xxx.xxx.xxx
     border_firewall_address_2: aaa.aaa.aaa.aaa
     domain_controller_01: bbb.bbb.bbb.bbb
+    #To set a specified output location, uncomment below and in task 'Save output to ansible host'
     output_localtion : /path/to/record_light-loss.txt
   tasks:
   
