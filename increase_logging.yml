@@ -1,5 +1,6 @@
 ---
-- hosts: stacks
+- name: Increase logging
+  hosts: 
   tasks:
   
   - name: Incease the logging buffer level on both stacks
