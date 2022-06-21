@@ -2,7 +2,8 @@
 - name: Backbone and Datacenter Switch Output
   hosts: 
   vars:
-    output_localtion: /path/to/backbone_datacenter_switch_output.txt
+  #Set output_location to specify where output will be saved, if not specified it will be saved to "{{ playbook_dir }}/files/backbone_datacenter_switch_output.txt"
+    output_location: /path/to/backbone_datacenter_switch_output.txt
   tasks:
   
   - name: Gather tech-support information
@@ -62,6 +63,6 @@
     copy:
       content: "{{ command.{{ item }} | to_nice_json }}"
       dest: "{{ playbook_dir }}/files/backbone_datacenter_switch_output.txt"
-#      dest: "{{ output_localtion }}"
+#      dest: "{{ output_location }}"
     with_sequence: start=0 end=7
     delegate_to: localhost
