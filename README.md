@@ -20,10 +20,12 @@ The increate_logging.yml playbook will tweak the logging buffer for both the sta
 The record_light-loss.yml playbook will enable native Cisco DOM (Digital Optical Monitoring) capabilities to note fiber light-loss on select inter-switch links. This will result in a record_light-loss.txt in the ./files directory on the ansible host.
 
 ##### Variables for this file: 
-> border_firewall_address_1: xxx.xxx.xxx.xxx
-> border_firewall_address_2: aaa.aaa.aaa.aaa
-> domain_controller_01: bbb.bbb.bbb.bbb
-> output_localtion : /path/to/record_light-loss.txt
+```
+ border_firewall_address_1: xxx.xxx.xxx.xxx
+ border_firewall_address_2: aaa.aaa.aaa.aaa
+ domain_controller_01: bbb.bbb.bbb.bbb
+ output_localtion : /path/to/record_light-loss.txt
+```
 
 ## fetch.yml
 This playbook will retrieve the files created in memory by the EEM script from eem.yml.
