@@ -1,5 +1,11 @@
 # cisco
 
+## Use the cisco.ios collection
+To use the cisco.ios module that is utilized in the below playbooks, run the following command on the ansible host.
+```
+ansible-galaxy collection install cisco.ios
+```
+
 ## backbone_datacenter_switch_output.yml
 This playbook will execute a list of show commands to gather information for troubleshooting. The most useful data would be collected if the playbook is executed during a period of network connectivity disruption. 
 
