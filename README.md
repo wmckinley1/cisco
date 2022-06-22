@@ -1,5 +1,10 @@
 # cisco
 
+## To get this code on your local system for testing
+```
+git clone https://github.com/wmckinley1/cisco
+```
+
 ## Use the cisco.ios collection
 To use the cisco.ios module that is utilized in the below playbooks, run the following command on the ansible host.
 ```
