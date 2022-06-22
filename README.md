@@ -34,5 +34,5 @@ This playbook will retrieve the files created in memory by the EEM script from e
 
 ##### Variables for this file:
 ```
- Output_location: /path/to/dir
+ output_location: /path/to/dir
 ```
