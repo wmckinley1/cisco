@@ -2,6 +2,8 @@
 - name: fetch 24 hours of monitoring text files
   hosts: []
   remote_user: []
+  vars:
+    output_dir: /path/to/dir
   become: false
 
   tasks:
@@ -9,14 +11,14 @@
    - name: fetch buffer monitor text
       get_url:
         url: ftp://[user[:pass]]@host.domain[:port]/path
-        dest: /path/to/local/dest
+        dest: "{{ output_dir }}/BufferMonitor.txt"
 
     - name: fetch interface stats text
       get_url:
         url: ftp://[user[:pass]]@host.domain[:port]/path
-        dest: /path/to/local/dest
+        dest: "{{ output_dir }}/InterfaceStats.txt"
 
     - name: fetch logs
       get_url:
         url: ftp://[user[:pass]]@host.domain[:port]/path
-        dest: /path/to/local/dest
+        dest: "{{ output_dir }}/Logs.txt"
