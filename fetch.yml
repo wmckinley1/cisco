@@ -9,9 +9,9 @@
   tasks:
 
    - name: fetch buffer monitor text
-      get_url:
-        url: ftp://[user[:pass]]@host.domain[:port]/path
-        dest: "{{ output_dir }}/BufferMonitor.txt"
+     get_url:
+       url: ftp://[user[:pass]]@host.domain[:port]/path
+       dest: "{{ output_dir }}/BufferMonitor.txt"
 
     - name: fetch interface stats text
       get_url:
