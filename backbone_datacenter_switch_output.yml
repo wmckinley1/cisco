@@ -7,46 +7,46 @@
   tasks:
   
   - name: Gather tech-support information
-    cisco.ios.ios_commands:
+    cisco.ios.ios_command:
       commands: show tech
     register: command.0
 
   - name: View control plane memory and CPU utilization information
-    cisco.ios.ios_commands:
+    cisco.ios.ios_command:
       commands: show platform software status control-processor brief
     register: command.1
 
   - name: Monitor memory usage
-    cisco.ios.ios_commands:
+    cisco.ios.ios_command:
       commands: show memory allocating-process totals
     register: command.2
 
   - name: Show current spanning-tree status
-    cisco.ios.ios_commands:
+    cisco.ios.ios_command:
       commands: show spanning-tree summary
     register: command.3
 
   - name: See the list of inconsistent ports
-    cisco.ios.ios_commands:
+    cisco.ios.ios_command:
       commands: show spanning-tree inconsistent
     register: command.4
 
   - name: Display the configured or calculated interface-level spanning-tree protocol parameters
-    cisco.ios.ios_commands:
+    cisco.ios.ios_command:
       commands:
       - show spanning-tree interface fo1/1/1 detail
       - show spanning-tree interface fo2/1/1 detail
     register: command.5
 
   - name: Display device-specific queue stats for 40G interfaces on switches 1 & 2
-    cisco.ios.ios_commands:
+    cisco.ios.ios_command:
       commands:
       - show platform hardware fed switch 1 qos queue stats interface fortygig 1/1/1
       - show platform hardware fed switch 2 qos queue stats interface fortygig 2/1/1
     register: command.6
 
   - name: Display device-specific information queue stats for 10G interfaces active switch
-    cisco.ios.ios_commands:
+    cisco.ios.ios_command:
       commands:
       - "show platform hardware fed switch active qos queue stats interface TenGigabitEthernet1/0/{{ item }}"
       - "show platform hardware fed switch active qos queue stats interface TenGigabitEthernet2/0/{{ item }}"
