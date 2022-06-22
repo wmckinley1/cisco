@@ -7,7 +7,7 @@ This playbook will execute a list of show commands to gather information for tro
 This playbook will create an Embedded Event Manager (EEM) script which will monitor the stack and collect required buffer and QoS commands every 1 hour. A capture of the log files from this playbook would be ideal while everything is working. The files captured with this playbook can be retrieved by running the fetch.yml playbook.
 Note: The script below will be run on ships that utilize the HW1.2 baseline using Catalyst 3850s.
 
-### Variables for this file: 
+##### Variables for this file: 
 output_location: /path/to/backbone_datacenter_switch_output.txt
 
 ## remove_eem.yml
