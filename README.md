@@ -8,7 +8,7 @@ This playbook will create an Embedded Event Manager (EEM) script which will moni
 Note: The script below will be run on ships that utilize the HW1.2 baseline using Catalyst 3850s.
 
 ##### Variables for this file: 
-output_location: /path/to/backbone_datacenter_switch_output.txt
+> output_location: /path/to/backbone_datacenter_switch_output.txt
 
 ## remove_eem.yml
 If needed, remove_eem.yml can be used to remove the eem script created by eem.yml
