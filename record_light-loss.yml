@@ -10,19 +10,19 @@
   tasks:
   
   - name: Change to privileged mode
-    cisco.ios.ios_commands:
+    cisco.ios.ios_command:
       commands: enable
 
   - name: Gather information on interfaces
-    cisco.ios.ios_commands:
+    cisco.ios.ios_command:
       commands: sh ip interface brief
 
   - name: Print neighbor data structure
-    cisco.ios.ios_commands:
+    cisco.ios.ios_command:
       commands: sh ip ospf neighbor
 
   - name: Print connection to local devices
-    cisco.ios.ios_commands:
+    cisco.ios.ios_command:
       commands:
       - ping "{{ border_firewall_address_1 }}"
       - ping "{{ border_firewall_address_2 ))"
@@ -35,7 +35,7 @@
       - monitoring
 
   - name: Show interface information
-    cisco.ios.ios_commands:
+    cisco.ios.ios_command:
       commands: show interface transceiver
     register: output
   
