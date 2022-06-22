@@ -22,7 +22,7 @@ Note: The script below will be run on ships that utilize the HW1.2 baseline usin
 If needed, remove_eem.yml can be used to remove the eem script created by eem.yml
 
 ## increase_logging.yml
-The increate_logging.yml playbook will tweak the logging buffer for both the stacks to collect all data available when issue reoccurs.
+The increase_logging.yml playbook will tweak the logging buffer for both the stacks to collect all data available when issue reoccurs.
 
 ## record_light-loss.yml
 The record_light-loss.yml playbook will enable native Cisco DOM (Digital Optical Monitoring) capabilities to note fiber light-loss on select inter-switch links. This will result in a record_light-loss.txt in the ./files directory on the ansible host.
