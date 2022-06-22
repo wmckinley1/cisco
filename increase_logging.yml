@@ -4,13 +4,13 @@
   tasks:
   
   - name: Incease the logging buffer level on both stacks
-    cisco.ios.ios_commands:
+    cisco.ios.ios_command:
       commands: 
       - conf t
       - logging buffer debugging
 
   - name: Enable logging event link under Po31
-    cisco.ios.ios_commands:
+    cisco.ios.ios_command:
       commands:
       - int po31
       - logging event link-status
